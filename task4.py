@@ -19,9 +19,12 @@ def parse_input(user_input):
 @input_error
 def add_contact(args, contacts):
     name, phone = args
-    #add new contact
-    contacts[name] = phone
-    return "Contact added."
+    if any(name in item for item in contacts):
+        return f"{name} is already added in the list"
+    else:
+        #add new contact
+        contacts[name] = phone
+        return "Contact added."
 
 @input_error
 def change_contact(args, contacts):

@@ -6,7 +6,7 @@ def parse_log_line(line: str) -> dict:
     #log line validation check 
     if re.match(r'(\d{4}(?:-\d{2}){2} \d{2}(?::\d{2}){2}) ([A-Z]+) (.*)',line):
         #convert log line into parsed dict
-        parsed_line = {"date": " ".join((line.split(' '))[:2]),"level":(line.split(' '))[2],"message":" ".join(line.split(' ')[3:])}
+        parsed_line = {"date":line.split(' ')[0],"time":line.split(' ')[1],"level":line.split(' ')[2],"message":" ".join(line.split(' ')[3:])}
         return parsed_line
     
 def load_logs(file_path: str) -> list:
@@ -42,6 +42,6 @@ if __name__ == "__main__":
             logs=filter_logs_by_level(logs,sys.argv[2])
             if logs:
                 print(f"Деталі логів для рівня {sys.argv[2]}:")
-                print(''.join(map(lambda x: f"{x['date']} - {x['message']}",logs)))
+                print(''.join(map(lambda x: f"{x['date']} {x['time']} - {x['message']}",logs)))
     except Exception as e:
         print(f"Error: {e}") 
